@@ -22,30 +22,18 @@ export default async function auth(req: any, res: any) {
       async authorize(credentials) {
         try {
           const siwe = new SiweMessage(JSON.parse(credentials?.message || "{}"));
-
-
-          try {
-            const result = await siwe.verify({
-              signature: credentials?.signature || "",
-              domain: siwe.domain,
-              // @ts-ignore
-              nonce: credentials?.csrfToken || "",
-            })
-            console.log('===', result);
-            if (result.success) {
-              return {
-                id: siwe.address,
-              }
+          const result = await siwe.verify({
+            signature: credentials?.signature || "",
+            domain: siwe.domain,
+            // @ts-ignore
+            nonce: credentials?.csrfToken || "",
+          })
+          if (result.success) {
+            return {
+              id: siwe.address,
             }
-
-          } catch (error) {
-            console.log('error', error);
-
           }
-
-          return {
-            id: siwe.address,
-          }
+          return null;
         } catch (e) {
           return null
         }
