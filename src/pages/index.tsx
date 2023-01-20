@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 
 function Page() {
   const session = useSession();
-  console.log(session);
+  console.log('=====session======', session);
   return (
     <div>
       <Header />
