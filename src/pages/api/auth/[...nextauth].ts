@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { getCsrfToken } from "next-auth/react"
 import { SiweMessage } from "siwe"
 
 
@@ -24,15 +23,15 @@ export default async function auth(req: any, res: any) {
         try {
           const siwe = new SiweMessage(JSON.parse(credentials?.message || "{}"));
 
-          const nextAuthUrl = new URL(process.env.VERCEL_URL)
 
           try {
             const result = await siwe.verify({
               signature: credentials?.signature || "",
-              domain: nextAuthUrl.host,
-              nonce: await getCsrfToken({ req }),
+              domain: siwe.domain,
+              // @ts-ignore
+              nonce: credentials?.csrfToken || "",
             })
-            console.log(result);
+            console.log('===', result);
             if (result.success) {
               return {
                 id: siwe.address,
