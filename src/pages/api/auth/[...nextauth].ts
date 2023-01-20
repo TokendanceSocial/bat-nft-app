@@ -22,20 +22,23 @@ export default async function auth(req: any, res: any) {
       },
       async authorize(credentials) {
         try {
-          const siwe = new SiweMessage(JSON.parse(credentials?.message || "{}"))
-          const nextAuthUrl = new URL(process.env.VERCEL_URL)
+          const siwe = new SiweMessage(JSON.parse(credentials?.message || "{}"));
+          return {
+            id: siwe.address,
+          };
+          // const nextAuthUrl = new URL(process.env.VERCEL_URL)
 
-          const result = await siwe.verify({
-            signature: credentials?.signature || "",
-            domain: nextAuthUrl.host,
-            nonce: await getCsrfToken({ req }),
-          })
+          // const result = await siwe.verify({
+          //   signature: credentials?.signature || "",
+          //   domain: nextAuthUrl.host,
+          //   nonce: await getCsrfToken({ req }),
+          // })
 
-          if (result.success) {
-            return {
-              id: siwe.address,
-            }
-          }
+          // if (result.success) {
+          //   return {
+          //     id: siwe.address,
+          //   }
+          // }
           return null
         } catch (e) {
           return null
