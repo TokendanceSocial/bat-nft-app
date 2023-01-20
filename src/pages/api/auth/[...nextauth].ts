@@ -60,7 +60,6 @@ export default async function auth(req: any, res: any) {
       async session({ session, token }: { session: any; token: any }) {
         session.address = token.sub
         session.user.name = token.sub
-        session.user.url = process.env.VERCEL_URL || 'undefined'
         return session
       },
     },
