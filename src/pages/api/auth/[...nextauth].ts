@@ -41,15 +41,16 @@ export default async function auth(req: any, res: any) {
 
           } catch (error) {
             console.log('error', error);
-            return {
-              id: siwe.address,
-            }
+
           }
 
-          return null
+          return {
+            id: siwe.address,
+          }
         } catch (e) {
           return null
         }
+
       },
     }),
   ]
