@@ -28,8 +28,8 @@ function Siwe() {
     onceRef.current = true;
     getNonce();
   }, [getNonce]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleLogin = async (nonce: string) => {
+
+  const handleLogin = async () => {
     try {
       const message = new SiweMessage({
         domain: window.location.host,
@@ -62,9 +62,7 @@ function Siwe() {
 
   useEffect(() => {
     if (connected && !session && nonce) {
-      setTimeout(() => {
-        handleLogin(nonce);
-      }, 1000);
+      handleLogin();
     }
     if (!isConnected && session) {
       signOut({
