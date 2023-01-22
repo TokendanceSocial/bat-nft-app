@@ -71,7 +71,8 @@ function Siwe() {
         redirect: false,
       });
     }
-  }, [connected, session, isConnected, nonce, handleLogin]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected, session, isConnected, nonce]);
 
   return <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />;
 }
