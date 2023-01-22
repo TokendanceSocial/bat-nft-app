@@ -26,11 +26,14 @@ function Siwe() {
       const signature = await signMessageAsync({
         message: message.prepareMessage(),
       });
-      signIn('credentials', {
+      const response = await signIn('credentials', {
         message: JSON.stringify(message),
         redirect: false,
         signature,
       });
+      if (!response?.ok) {
+        throw new Error('Error verifying signature, please retry!');
+      }
     } catch (error) {
       window.alert(error);
     }
