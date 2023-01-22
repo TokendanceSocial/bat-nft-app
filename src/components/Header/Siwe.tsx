@@ -19,41 +19,42 @@ function Siwe() {
       setNonce(nonce);
     } catch (error) {}
   }, []);
+  // Pre-fetch nonce when screen is rendered
+  // to ensure deep linking works for WalletConnect
+  // users on iOS when signing the SIWE message
   const onceRef = useRef(false);
   useEffect(() => {
     if (onceRef.current) return;
     onceRef.current = true;
     getNonce();
   }, [getNonce]);
-  const handleLogin = useCallback(
-    async (nonce: string) => {
-      try {
-        const message = new SiweMessage({
-          domain: window.location.host,
-          address: address,
-          statement: 'Sign in with Ethereum to the app.',
-          uri: window.location.origin,
-          version: '1',
-          chainId: chain?.id,
-          nonce: nonce,
-        });
-        const signature = await signMessageAsync({
-          message: message.prepareMessage(),
-        });
-        const response = await signIn('credentials', {
-          message: JSON.stringify(message),
-          redirect: false,
-          signature,
-        });
-        if (!response?.ok) {
-          throw new Error('Error verifying signature, please retry!');
-        }
-      } catch (error) {
-        window.alert(error);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleLogin = async (nonce: string) => {
+    try {
+      const message = new SiweMessage({
+        domain: window.location.host,
+        address: address,
+        statement: 'Sign in with Ethereum to the app.',
+        uri: window.location.origin,
+        version: '1',
+        chainId: chain?.id,
+        nonce,
+      });
+      const signature = await signMessageAsync({
+        message: message.prepareMessage(),
+      });
+      const response = await signIn('credentials', {
+        message: JSON.stringify(message),
+        redirect: false,
+        signature,
+      });
+      if (!response?.ok) {
+        throw new Error('Error verifying signature, please retry!');
       }
-    },
-    [address, chain?.id, signMessageAsync],
-  );
+    } catch (error) {
+      window.alert(error);
+    }
+  };
 
   const connected = useMemo(() => {
     return isConnected && clickConnect;
@@ -61,15 +62,16 @@ function Siwe() {
 
   useEffect(() => {
     if (connected && !session && nonce) {
-      handleLogin(nonce);
+      setTimeout(() => {
+        handleLogin(nonce);
+      }, 1000);
     }
     if (!isConnected && session) {
       signOut({
         redirect: false,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected, session, isConnected, nonce]);
+  }, [connected, session, isConnected, nonce, handleLogin]);
 
   return <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />;
 }
