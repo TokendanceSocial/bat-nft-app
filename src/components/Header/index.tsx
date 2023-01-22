@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import CustomConnectBtn from '../CustomConnectBtn';
+import Siwe from './Siwe';
 import Logo from '@/assets/images/batLogo.png';
 import { links, pages } from '@/constanst/header';
 import style from '@/styles/Header.module.css';
@@ -41,7 +41,7 @@ export default function Header() {
               ))}
             </div>
 
-            <CustomConnectBtn />
+            <Siwe />
           </div>
         </div>
       </div>

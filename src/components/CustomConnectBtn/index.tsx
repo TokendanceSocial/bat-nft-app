@@ -1,10 +1,16 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
 import connectLogo from '@/assets/images/connectLogo.svg';
-const CustomConnectBtn = () => {
+const CustomConnectBtn = ({
+  onConnect,
+  authenticationStatus,
+}: {
+  onConnect: () => void;
+  authenticationStatus: string;
+}) => {
   return (
     <ConnectButton.Custom>
-      {({ account, chain, openAccountModal, openConnectModal, authenticationStatus, mounted }) => {
+      {({ account, chain, openAccountModal, openConnectModal, mounted }) => {
         const ready = mounted && authenticationStatus !== 'loading';
         const connected =
           ready &&
@@ -28,7 +34,14 @@ const CustomConnectBtn = () => {
                 return (
                   <>
                     <Image src={connectLogo} alt='connect logo' />
-                    <button className='ml-2 ' onClick={openConnectModal} type='button'>
+                    <button
+                      className='ml-2 '
+                      onClick={() => {
+                        openConnectModal();
+                        onConnect();
+                      }}
+                      type='button'
+                    >
                       Connect
                     </button>
                   </>

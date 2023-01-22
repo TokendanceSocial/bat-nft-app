@@ -40,11 +40,9 @@ export default function App({ Component, pageProps }: AppProps<{ session: Sessio
   return (
     <WagmiConfig client={wagmiClient}>
       <SessionProvider refetchInterval={0} session={pageProps.session}>
-        <RainbowKitSiweNextAuthProvider>
-          <RainbowKitProvider avatar={CustomAvatar} theme={theme} chains={chains}>
-            <Component {...pageProps} />
-          </RainbowKitProvider>
-        </RainbowKitSiweNextAuthProvider>
+        <RainbowKitProvider avatar={CustomAvatar} theme={theme} chains={chains}>
+          <Component {...pageProps} />
+        </RainbowKitProvider>
       </SessionProvider>
     </WagmiConfig>
   );
