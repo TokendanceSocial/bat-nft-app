@@ -5,14 +5,27 @@ export async function mint(id: string, sections: string[]) {
   // @ts-ignore
   const tl = new window.TimelineMax();
   sections.forEach((item, index) => {
-    tl.fromTo(
-      item,
-      1,
-      { xPercent: 100 },
-      // @ts-ignore
-      { xPercent: 0, ease: window.Linear.easeNone },
-      "+=1"
-    );
+    if (index % 2 === 0) {
+      tl.fromTo(
+        item,
+        1,
+        { xPercent: 100 },
+        // @ts-ignore
+        { xPercent: 0, ease: window.Linear.easeNone },
+        "+=1"
+      );
+    } else {
+      tl.fromTo(
+        item,
+        1,
+        { yPercent: 100 },
+        // @ts-ignore
+        { yPercent: 0, ease: Linear.easeNone },
+        "+=1"
+      );
+    }
+
+
   })
 
 
@@ -20,7 +33,7 @@ export async function mint(id: string, sections: string[]) {
   new window.ScrollMagic.Scene({
     triggerElement: `#${id}`,
     triggerHook: "onLeave",
-    duration: "100%"
+    duration: "300%"
   })
     .setPin(`#${id}`)
     // @ts-ignore
@@ -76,14 +89,6 @@ export async function roadMap() {
     tl.from(titles[index], 0.5, { opacity: 0 }, `label${index}+=0.5`);
 
   }
-  // tl.to("#js-slideContainer", 1, { xPercent: -20 }, "label1");
-  // tl.from(titles[1], 0.5, { opacity: 0 }, "label1+=0.5");
-  // tl.to("#js-slideContainer", 1, { xPercent: -40 }, "label2");
-  // tl.from(titles[2], 0.5, { opacity: 0 }, "label2+=0.5");
-  // tl.to("#js-slideContainer", 1, { xPercent: -60 }, "label3");
-  // tl.from(titles[3], 0.5, { opacity: 0 }, "label3+=0.5");
-  // tl.to("#js-slideContainer", 1, { xPercent: -80 }, "label4");
-  // tl.from(titles[4], 0.5, { opacity: 0 }, "label4+=0.5");
 
 
   // @ts-ignore
