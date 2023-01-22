@@ -5,7 +5,14 @@ import Logo2 from '@/assets/images/teamLogo2.png';
 
 export default function Team() {
   return (
-    <div id='team' className='bg-[#0d1c42] text-white p-4'>
+    <div
+      id='team'
+      style={{
+        width: '100vw',
+        height: '100vh',
+      }}
+      className='bg-[#0d1c42] text-white p-4'
+    >
       <div className='box flex flex-row items-center justify-center mb-6'>
         <Image width={110} height={126} src={Logo1} alt='Mint Logo' />
         <div className=' text-center font-normal text-3xl text-white'>TEAM</div>
