@@ -1,5 +1,5 @@
 import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SiweMessage } from 'siwe';
 import { useAccount, useNetwork, useSignMessage } from 'wagmi';
 import CustomConnectBtn from '../CustomConnectBtn';
@@ -12,42 +12,56 @@ function Siwe() {
 
   const { data: session, status } = useSession();
 
-  const handleLogin = async () => {
+  const [nonce, setNonce] = useState<string>();
+  const getNonce = useCallback(async () => {
     try {
-      const message = new SiweMessage({
-        domain: window.location.host,
-        address: address,
-        statement: 'Sign in with Ethereum to the app.',
-        uri: window.location.origin,
-        version: '1',
-        chainId: chain?.id,
-        nonce: await getCsrfToken(),
-      });
-      const signature = await signMessageAsync({
-        message: message.prepareMessage(),
-      });
-      const response = await signIn('credentials', {
-        message: JSON.stringify(message),
-        redirect: false,
-        signature,
-      });
-      if (!response?.ok) {
-        throw new Error('Error verifying signature, please retry!');
+      const nonce = await getCsrfToken();
+      setNonce(nonce);
+    } catch (error) {}
+  }, []);
+  const onceRef = useRef(false);
+  useEffect(() => {
+    if (onceRef.current) return;
+    onceRef.current = true;
+    getNonce();
+  }, [getNonce]);
+  const handleLogin = useCallback(
+    async (nonce: string) => {
+      try {
+        const message = new SiweMessage({
+          domain: window.location.host,
+          address: address,
+          statement: 'Sign in with Ethereum to the app.',
+          uri: window.location.origin,
+          version: '1',
+          chainId: chain?.id,
+          nonce: nonce,
+        });
+        const signature = await signMessageAsync({
+          message: message.prepareMessage(),
+        });
+        const response = await signIn('credentials', {
+          message: JSON.stringify(message),
+          redirect: false,
+          signature,
+        });
+        if (!response?.ok) {
+          throw new Error('Error verifying signature, please retry!');
+        }
+      } catch (error) {
+        window.alert(error);
       }
-    } catch (error) {
-      window.alert(error);
-    }
-  };
+    },
+    [address, chain?.id, signMessageAsync],
+  );
 
   const connected = useMemo(() => {
     return isConnected && clickConnect;
   }, [clickConnect, isConnected]);
 
   useEffect(() => {
-    if (connected && !session) {
-      setTimeout(() => {
-        handleLogin();
-      }, 1000);
+    if (connected && !session && nonce) {
+      handleLogin(nonce);
     }
     if (!isConnected && session) {
       signOut({
@@ -55,7 +69,7 @@ function Siwe() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected, session, isConnected]);
+  }, [connected, session, isConnected, nonce]);
 
   return <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />;
 }
