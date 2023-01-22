@@ -62,7 +62,7 @@ function Siwe() {
 
   useEffect(() => {
     if (connected && !session && nonce) {
-      handleLogin();
+      // handleLogin();
     }
     if (!isConnected && session) {
       signOut({
@@ -72,7 +72,12 @@ function Siwe() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected, session, isConnected, nonce]);
 
-  return <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />;
+  return (
+    <>
+      <button onClick={handleLogin}>11111</button>
+      <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />
+    </>
+  );
 }
 
 export default Siwe;
