@@ -1,16 +1,90 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@layer base {
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Press Start 2P';
+    font-style: normal;
+  }
 
-* {
-  box-sizing: border-box;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  #mintContainer {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .panel {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
+  #pinner {
+    position: relative;
+  }
+
+  .section {
+    height: 100%;
+    width: calc(100% / 5);
+    float: left;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .section:nth-child(odd) {
+    background: #1043c5;
+  }
+  .section:nth-child(even) {
+    background: #0d1c42;
+  }
+
+  .sections {
+    width: 500%;
+    height: 100%;
+  }
+  .sectionTitle {
+    font-size: 30px;
+    color: #fff;
+  }
+  #faq .accordion-button,
+  #faq .accordion-button:not(.collapsed) {
+    color: #fff;
+    background-color: #1043c5;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px solid #fff;
+  }
+  #faq .accordion-button::after {
+    content: '+';
+  }
+  #faq .accordion-button:not(.collapsed)::after {
+    content: '-';
+  }
+  #faq .accordion-body {
+    background-color: #032d98;
+    border-radius: 8px;
+  }
+  #faq .accordion-item:last-of-type {
+    border-radius: 0;
+  }
 }
