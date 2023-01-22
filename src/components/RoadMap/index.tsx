@@ -1,7 +1,6 @@
 import Image, { StaticImageData } from 'next/image';
 import React, { useCallback, useEffect } from 'react';
 import roadmapLogo1 from '@/assets/images/roadmapLogo1.png';
-import roadmapLogo2 from '@/assets/images/roadmapLogo2.png';
 import { roadmapData } from '@/constanst/roadmap';
 import { roadMap } from '@/utils/scrollMagic';
 
@@ -20,7 +19,7 @@ export default function RoadMap() {
       index: number,
     ) => {
       const title = (
-        <div className={`${index % 2 === 0 ? 'mt-[250px] flex gap-6' : 'flex gap-6'}`}>
+        <div key='title' className={`${index % 2 === 0 ? 'mt-[250px] flex gap-6' : 'flex gap-6'}`}>
           <h3 className='font-medium text-6xl max-md:hidden'>{`0${index + 1}`}</h3>
           <div>
             <div className='font-black text-lg'>{item.title}</div>
@@ -35,7 +34,7 @@ export default function RoadMap() {
         </div>
       );
       const cover = (
-        <div className='mt-4 relative'>
+        <div key='cover' className='mt-4 relative'>
           <div className={`absolute top-5 left-${index % 2 === 0 ? '6' : '7'}`}>
             <Image width={200} height={200} alt='roadmap img' src={item.cover} />
           </div>

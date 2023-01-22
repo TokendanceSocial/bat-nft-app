@@ -6,15 +6,15 @@ import { storyContent } from '@/constanst/story';
 
 export default function MinStory() {
   return (
-    <div id='stage' className='w-full flex flex-col items-center justify-center py-10'>
-      <div className='box flex flex-row items-center justify-center mb-6'>
+    <div className='w-full flex flex-col items-center justify-center py-10'>
+      <div className='flex flex-row items-center justify-center mb-6'>
         <div className=' mr-8 font-normal text-3xl text-white'>ABOUT BAT</div>
         <Image width={110} height={126} src={Logo} alt='Mint Logo' />
       </div>
-      <div className='box'>
+      <div>
         <Image alt='Story Img' src={storyImg} />
       </div>
-      <div className='box flex-1 flex flex-col mt-8 text-white text-sm'>
+      <div className='flex-1 flex flex-col mt-8 text-white text-sm'>
         {storyContent.map((item, index) => (
           <div key={index} className='mt-4'>
             {item}
