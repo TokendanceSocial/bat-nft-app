@@ -45,7 +45,9 @@ function Siwe() {
 
   useEffect(() => {
     if (connected && !session) {
-      handleLogin();
+      setTimeout(() => {
+        handleLogin();
+      }, 1000);
     }
     if (!isConnected && session) {
       signOut({
