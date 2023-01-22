@@ -60,9 +60,10 @@ function Siwe() {
     return isConnected && clickConnect;
   }, [clickConnect, isConnected]);
 
+  const ref = useRef<any>();
   useEffect(() => {
     if (connected && !session && nonce) {
-      // handleLogin();
+      ref.current?.click();
     }
     if (!isConnected && session) {
       signOut({
@@ -74,7 +75,8 @@ function Siwe() {
 
   return (
     <>
-      <button onClick={handleLogin}>11111</button>
+      <button className='invisible' ref={ref} onClick={handleLogin} />
+
       <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />
     </>
   );
