@@ -11,21 +11,29 @@ function Siwe() {
     }
     return 'unauthenticated';
   });
+  const onAfterVerify = useCallback(() => {
+    localStorage.setItem('authenticationStatus', 'true');
+    setAuthenticationStatus('authenticated');
+  }, []);
+
   const { signMessage } = useSignMessage({
     onSuccess(data, variables) {
       // Verify signature when sign message succeeds
       const address = verifyMessage(variables.message, data);
       if (!address) return;
-      localStorage.setItem('authenticationStatus', 'true');
-      setAuthenticationStatus('authenticated');
+      onAfterVerify();
     },
   });
   const [clickConnect, setClickConnect] = useState(false);
   const { isConnected } = useAccount();
 
   const handleLogin = useCallback(async () => {
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+      onAfterVerify();
+      return;
+    }
     signMessage({ message: 'Sign in the bat nft app.' });
-  }, [signMessage]);
+  }, [signMessage, onAfterVerify]);
 
   const signOut = useCallback(() => {
     setAuthenticationStatus('unauthenticated');
