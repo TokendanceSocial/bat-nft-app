@@ -29,10 +29,8 @@ function Siwe() {
     getNonce();
   }, [getNonce]);
 
-  const [text, setText] = useState('sign');
   const handleLogin = useCallback(async () => {
     try {
-      setText('signing-1');
       const message = new SiweMessage({
         domain: window.location.host,
         address: address,
@@ -42,11 +40,9 @@ function Siwe() {
         chainId: chain?.id,
         nonce,
       });
-      setText('signing-2');
       const signature = await signMessageAsync({
         message: message.prepareMessage(),
       });
-      setText('verifying');
       const response = await signIn('credentials', {
         message: JSON.stringify(message),
         redirect: false,
@@ -64,7 +60,6 @@ function Siwe() {
     return isConnected && clickConnect;
   }, [clickConnect, isConnected]);
 
-  const ref = useRef<any>();
   useEffect(() => {
     if (!isConnected && session) {
       signOut({
@@ -75,20 +70,11 @@ function Siwe() {
 
   useEffect(() => {
     if (connected && !session && nonce) {
-      console.log('====sign');
       handleLogin();
     }
   }, [connected, nonce, session, handleLogin]);
 
-  return (
-    <>
-      <button ref={ref} onClick={handleLogin}>
-        {text}
-      </button>
-
-      <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />
-    </>
-  );
+  return <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />;
 }
 
 export default Siwe;
