@@ -68,13 +68,20 @@ function Siwe() {
     }
   }, [isConnected, session]);
 
+  /**
+   * While it might be tempting to combine the "Connect Wallet" and "Sign In" steps into a single action, this causes issues with deep linking for WalletConnect on iOS. This is because the browser doesn't open the corresponding native app if the navigation wasn't immediately triggered by a user action.
+   */
   useEffect(() => {
     if (connected && !session && nonce) {
       handleLogin();
     }
   }, [connected, nonce, session, handleLogin]);
 
-  return <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />;
+  return (
+    <>
+      <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />
+    </>
+  );
 }
 
 export default Siwe;
