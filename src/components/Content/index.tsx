@@ -4,11 +4,9 @@ import Mint from '../Mint';
 import RoadMap from '../RoadMap';
 import Story from '../Story';
 import Team from '../Team';
-import style from '@/styles/Main.module.css';
-
 export default function Content() {
   return (
-    <div className={style['voc-app']}>
+    <div id='content' className='pt-[64px]'>
       <Mint />
       <Story />
       <RoadMap />

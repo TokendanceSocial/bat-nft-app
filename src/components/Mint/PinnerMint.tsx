@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import MintItem, { MintItemProps } from './Item';
-import { mint } from '@/utils/scrollMagic';
-
+import { pinSpacer } from '@/utils/mint';
 export default function PinnerMint({ mints }: { mints: MintItemProps['mint'][] }) {
   useEffect(() => {
-    mint('pinner', ['section.panel.mint2', 'section.panel.mint3']);
+    pinSpacer();
   }, []);
 
   return (
-    <div id='pinner' className=''>
-      <div id='mintContainer'>
+    <div id='pinMaster'>
+      <div id='pinContainer'>
         {mints.map((mint, index) => (
-          <section key={mint.name} className={`bg-[#1043C5] flex flex-col panel mint${index + 1} `}>
+          <section key={mint.name} className={`panel pin-${index}`}>
             <MintItem mint={mint} />
           </section>
         ))}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import NormalMint from './NormalMint';
 import PinnerMint from './PinnerMint';
 import { StageType, mintStages } from '@/constanst/mint';
@@ -29,7 +29,7 @@ export default function Mint() {
 
   return (
     <div id='mint'>
-      <div className='lg:block max-lg:hidden'>
+      <div className='hidden lg:block'>
         <NormalMint mints={mints} />
       </div>
       <div className='lg:hidden'>

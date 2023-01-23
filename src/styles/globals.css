@@ -9,6 +9,7 @@
     margin: 0;
     font-family: 'Press Start 2P';
     font-style: normal;
+    background-color: '#0D1C42';
   }
 
   a {
@@ -19,72 +20,84 @@
   * {
     box-sizing: border-box;
   }
+  #faq .accordion-header > span {
+    width: 20px;
+    height: 20px;
+  }
+}
 
-  #mintContainer {
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    position: relative;
-  }
+#pinContainer {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
 
-  section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .panel {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-  }
+#content section,
+#content footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+#content .panel {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
 
-  #pinner {
-    position: relative;
-  }
+#pinMaster {
+  position: relative;
+}
 
-  .section {
-    height: 100%;
-    width: calc(100% / 5);
-    float: left;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .section:nth-child(odd) {
-    background: #1043c5;
-  }
-  .section:nth-child(even) {
-    background: #0d1c42;
-  }
+#content footer {
+  height: 100px;
+  background-color: gray;
+}
 
-  .sections {
-    width: 500%;
-    height: 100%;
-  }
-  .sectionTitle {
-    font-size: 30px;
-    color: #fff;
-  }
-  #faq .accordion-button,
-  #faq .accordion-button:not(.collapsed) {
-    color: #fff;
-    background-color: #1043c5;
-    box-shadow: none;
-    border-radius: 0;
-    border-bottom: 1px solid #fff;
-  }
-  #faq .accordion-button::after {
-    content: '+';
-  }
-  #faq .accordion-button:not(.collapsed)::after {
-    content: '-';
-  }
-  #faq .accordion-body {
-    background-color: #032d98;
-    border-radius: 8px;
-  }
-  #faq .accordion-item:last-of-type {
-    border-radius: 0;
-  }
+#content .spacer {
+  height: 100vh;
+}
+
+.pin-0 {
+  background-color: #1043c5;
+}
+.pin-1 {
+  background-color: #f9540e;
+}
+.pin-2 {
+  background-color: #0d1c42;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.section {
+  height: 100%;
+  width: calc(100% / 5);
+  float: left;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.section:nth-child(odd) {
+  background: #1043c5;
+}
+.section:nth-child(even) {
+  background: #0d1c42;
+}
+
+.sections {
+  width: 500%;
+  height: 100%;
+}
+.sectionTitle {
+  font-size: 30px;
+  color: #fff;
 }

@@ -1,12 +1,12 @@
 import Image, { StaticImageData } from 'next/image';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { slider } from '../../utils/roadmap';
 import roadmapLogo1 from '@/assets/images/roadmapLogo1.png';
 import { roadmapData } from '@/constanst/roadmap';
-import { roadMap } from '@/utils/scrollMagic';
 
-export default function RoadMap() {
+export default function Example() {
   useEffect(() => {
-    roadMap();
+    slider();
   }, []);
 
   const renderItem = useCallback(
@@ -20,10 +20,10 @@ export default function RoadMap() {
     ) => {
       const title = (
         <div key='title' className={`${index % 2 === 0 ? 'mt-[250px] flex gap-6' : 'flex gap-6'}`}>
-          <h3 className='font-medium text-6xl max-md:hidden'>{`0${index + 1}`}</h3>
+          <h3 className='font-medium text-6xl hidden md:block'>{`0${index + 1}`}</h3>
           <div>
             <div className='font-black text-lg'>{item.title}</div>
-            <ul className={`mt-4 text-base leading-7 list-disc pl-4 max-md:font-sans `}>
+            <ul className={`mt-4 text-base leading-7 list-disc pl-4 `}>
               {item.content.map((li, index) => (
                 <li className='wordspace-wrap' key={index}>
                   {li}
@@ -47,36 +47,23 @@ export default function RoadMap() {
     },
     [],
   );
-
   return (
-    <div
-      id='roadmap'
-      style={{
-        width: '100vw',
-        height: '100vh',
-      }}
-    >
+    <div className='wrapper' id='roadmap'>
       <div className='sections' id='js-slideContainer'>
         <section className='section'>
-          <div
-            className='w-full gap-8 sectionTitle mt-[-100px] flex flex-col justify-center items-center px-14 max-md:px-0'
-            id={`title1`}
-          >
+          <div className='sectionTitle flex flex-col justify-center items-center px-14 max-md:px-0'>
             <Image src={roadmapLogo1} alt='roadmap logo' />
             <div>ROADMAP</div>
           </div>
         </section>
         {roadmapData.map((item, index) => (
-          <section key={item.title} className='section'>
-            <div
-              className='w-full sectionTitle mt-[-100px] flex justify-center items-center px-14 max-md:px-0'
-              id={`title${index + 2}`}
-            >
+          <div key={item.title} className='section px-4 md:px-[40px]'>
+            <div className='sectionTitle'>
               <div className='w-full p-4 px-7 shrink-0 flex flex-col'>
                 {renderItem(item, index)}
               </div>
             </div>
-          </section>
+          </div>
         ))}
       </div>
     </div>

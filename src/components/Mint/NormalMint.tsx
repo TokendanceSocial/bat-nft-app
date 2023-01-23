@@ -7,7 +7,7 @@ export default function NormalMint({ mints }: { mints: MintItemProps['mint'][] }
   return (
     <div
       id='mintContainer'
-      className='w-full flex flex-col items-center justify-center overflow-clip bg-[#1043C5] px-4'
+      className='w-full flex flex-col px-6 py-[100px] items-center justify-center overflow-clip bg-[#1043C5] px-4'
     >
       <div className='flex items-center justify-center mb-6'>
         <div className='mr-8 font-normal	text-5xl text-white	'>WELCOME TO BAT CLUB</div>

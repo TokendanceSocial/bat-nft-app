@@ -11,7 +11,7 @@ export default function Team() {
         width: '100vw',
         height: '100vh',
       }}
-      className='bg-[#0d1c42] text-white p-4'
+      className='bg-[#0d1c42] text-white py-12 px-4'
     >
       <div className='box flex flex-row items-center justify-center mb-6'>
         <Image width={110} height={126} src={Logo1} alt='Mint Logo' />

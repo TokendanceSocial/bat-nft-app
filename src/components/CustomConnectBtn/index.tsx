@@ -19,7 +19,7 @@ const CustomConnectBtn = ({
           (!authenticationStatus || authenticationStatus === 'authenticated');
         return (
           <div
-            className='transition duration-300 cursor-pointer px-3.5 h-9 flex justify-center items-center text-lg text-white bg-blue-700 font-bold hover:bg-blue-800 rounded-full whitespace-nowrap'
+            className='transition duration-300 cursor-pointer px-3.5 h-9 flex justify-center items-center text-lg text-white bg-blue-900 font-bold hover:bg-blue-800 rounded-full whitespace-nowrap'
             {...(!ready && {
               'aria-hidden': true,
               style: {
@@ -33,7 +33,7 @@ const CustomConnectBtn = ({
               if (!connected) {
                 return (
                   <>
-                    <Image src={connectLogo} alt='connect logo' />
+                    <Image width={22} height={22} src={connectLogo} alt='connect logo' />
                     <button
                       className='ml-2 '
                       onClick={() => {

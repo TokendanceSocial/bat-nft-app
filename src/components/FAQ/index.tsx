@@ -1,48 +1,45 @@
+import { Accordion, AccordionHeader, AccordionBody } from '@material-tailwind/react';
 import Image from 'next/image';
-import React from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import Logo from '@/assets/images/faqLogo.png';
 import { faqData } from '@/constanst/faq';
 
 export default function FAQ() {
+  const [open, setOpen] = useState(0);
+
+  const handleOpen = useCallback((value: number) => {
+    setOpen((open) => {
+      return open === value ? -1 : value;
+    });
+  }, []);
+
   return (
-    <div id='faq' className='bg-[#1043c5] text-white p-4 flex flex-col items-center justify-center'>
-      <div className='pt-11 max-md:pt-0 flex flex-row items-center justify-center mb-6'>
-        <div className=' mr-8 font-normal text-3xl text-white'>FAQ</div>
-        <Image width={110} height={126} src={Logo} alt='Mint Logo' />
-      </div>
-      <div
-        className='accordion accordion-flush pb-11  w-[70%] max-md:w-full'
-        id='accordionFlushExample'
-      >
-        {faqData.map((item, index) => {
-          return (
-            <div
-              key={item.question}
-              className='accordion-item border-t-0 border-l-0 border-r-0 rounded-none border '
+    <div
+      id='faq'
+      className='w-full font-[Press Start 2P] bg-[#1043c5] text-white py-12 px-4 flex flex-col items-center justify-center'
+    >
+      <div className='lg:w-[80%]'>
+        <div className='flex flex-row items-center justify-center mb-6'>
+          <div className=' mr-8 font-normal text-3xl text-white'>FAQ</div>
+          <Image width={110} height={126} src={Logo} alt='Mint Logo' />
+        </div>
+        {faqData.map((item, index) => (
+          <Accordion key={index} open={open === index}>
+            <AccordionHeader
+              className='accordion-header font-[Press Start 2P] text-white hover:text-white text-left'
+              onClick={() => handleOpen(index)}
             >
-              <h2 className='accordion-header mb-0' id={`heading${index}`}>
-                <button
-                  className='accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left border-0 rounded-none transition focus:outline-none text-white collapsed'
-                  type='button'
-                  data-bs-toggle='collapse'
-                  data-bs-target={`#collapse${index}`}
-                  aria-expanded='false'
-                  aria-controls={`collapse${index}`}
-                >
-                  {item.question}
-                </button>
-              </h2>
-              <div
-                id={`collapse${index}`}
-                className='accordion-collapse border-0 collapse'
-                aria-labelledby={`heading${index}`}
-                data-bs-parent='#accordionFlushExample'
-              >
-                <div className='accordion-body my-4 py-4 px-5 text-sm'>{item.answer}</div>
-              </div>
-            </div>
-          );
-        })}
+              <div className='w-[90%]'>{item.question}</div>
+            </AccordionHeader>
+            <AccordionBody className='font-[Press Start 2P] text-white bg-[#032d98] rounded-md px-8 sm:px-4 mt-4'>
+              {item.answer.map((li, i) => (
+                <li className='my-3' key={i}>
+                  {li}
+                </li>
+              ))}
+            </AccordionBody>
+          </Accordion>
+        ))}
       </div>
     </div>
   );
