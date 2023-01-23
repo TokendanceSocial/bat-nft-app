@@ -67,7 +67,9 @@ function Siwe() {
   useEffect(() => {
     if (connected && !session && nonce) {
       document.body.focus();
-      handleLogin();
+      setTimeout(() => {
+        handleLogin();
+      }, 2000);
     }
     if (!isConnected && session) {
       signOut({
@@ -79,7 +81,7 @@ function Siwe() {
 
   return (
     <>
-      <button>{text}</button>
+      <button onClick={handleLogin}>{text}</button>
 
       <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />
     </>
