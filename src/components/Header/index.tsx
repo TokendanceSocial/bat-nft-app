@@ -14,7 +14,7 @@ export default function Header() {
       >
         <div className='max-w-[75%] w-screen h-16 flex items-center justify-between select-none px-10 max-sm:px-4'>
           <div className='flex justify-center items-center space-x-4'>
-            <div className='cursor-pointer mr-6'>
+            <div className='cursor-pointer mr-6 w-[166px] h-[64px]'>
               <Image width={166} height={64} alt='BAT NFT Logo' src={Logo} />
             </div>
             <div className='max-lg:hidden flex justify-center items-center space-x-4'>

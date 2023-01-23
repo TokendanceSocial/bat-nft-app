@@ -29,7 +29,7 @@ function Siwe() {
     getNonce();
   }, [getNonce]);
 
-  const [text, setText] = useState('');
+  const [text, setText] = useState('sign');
   const handleLogin = useCallback(async () => {
     try {
       setText('signing-1');
