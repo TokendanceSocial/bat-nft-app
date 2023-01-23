@@ -29,8 +29,10 @@ function Siwe() {
     getNonce();
   }, [getNonce]);
 
+  const [text, setText] = useState('');
   const handleLogin = async () => {
     try {
+      setText('signing-1');
       const message = new SiweMessage({
         domain: window.location.host,
         address: address,
@@ -40,9 +42,11 @@ function Siwe() {
         chainId: chain?.id,
         nonce,
       });
+      setText('signing-2');
       const signature = await signMessageAsync({
         message: message.prepareMessage(),
       });
+      setText('verifying');
       const response = await signIn('credentials', {
         message: JSON.stringify(message),
         redirect: false,
@@ -75,7 +79,7 @@ function Siwe() {
 
   return (
     <>
-      <button onClick={handleLogin}>sign</button>
+      <button>{text}</button>
 
       <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />
     </>
