@@ -66,18 +66,19 @@ function Siwe() {
 
   const ref = useRef<any>();
   useEffect(() => {
-    if (connected && !session && nonce) {
-      // setTimeout(() => {
-      //   ref.current.click();
-      // }, 2000);
-    }
     if (!isConnected && session) {
       signOut({
         redirect: false,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected, session, isConnected, nonce]);
+  }, [isConnected, session]);
+
+  useEffect(() => {
+    if (connected && !session && nonce) {
+      console.log('====sign');
+      handleLogin();
+    }
+  }, [connected, nonce, session, handleLogin]);
 
   return (
     <>
