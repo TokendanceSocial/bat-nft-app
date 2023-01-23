@@ -1,85 +1,62 @@
-import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { SiweMessage } from 'siwe';
-import { useAccount, useNetwork, useSignMessage } from 'wagmi';
+import { verifyMessage } from 'ethers/lib/utils';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useAccount, useSignMessage } from 'wagmi';
 import CustomConnectBtn from '../CustomConnectBtn';
 
 function Siwe() {
-  const { signMessageAsync } = useSignMessage();
-  const { chain } = useNetwork();
+  const [authenticationStatus, setAuthenticationStatus] = useState(() => {
+    if (typeof window === 'undefined') return 'unauthenticated';
+    if (localStorage.getItem('authenticationStatus') === 'true') {
+      return 'authenticated';
+    }
+    return 'unauthenticated';
+  });
+  const { signMessage } = useSignMessage({
+    onSuccess(data, variables) {
+      // Verify signature when sign message succeeds
+      const address = verifyMessage(variables.message, data);
+      if (!address) return;
+      localStorage.setItem('authenticationStatus', 'true');
+      setAuthenticationStatus('authenticated');
+    },
+  });
   const [clickConnect, setClickConnect] = useState(false);
-  const { address, isConnected } = useAccount();
-
-  const { data: session, status } = useSession();
-
-  const [nonce, setNonce] = useState<string>();
-  const getNonce = useCallback(async () => {
-    try {
-      const nonce = await getCsrfToken();
-      setNonce(nonce);
-    } catch (error) {}
-  }, []);
-  // Pre-fetch nonce when screen is rendered
-  // to ensure deep linking works for WalletConnect
-  // users on iOS when signing the SIWE message
-  const onceRef = useRef(false);
-  useEffect(() => {
-    if (onceRef.current) return;
-    onceRef.current = true;
-    getNonce();
-  }, [getNonce]);
+  const { isConnected } = useAccount();
 
   const handleLogin = useCallback(async () => {
-    try {
-      const message = new SiweMessage({
-        domain: window.location.host,
-        address: address,
-        statement: 'Sign in with Ethereum to the app.',
-        uri: window.location.origin,
-        version: '1',
-        chainId: chain?.id,
-        nonce,
-      });
-      const signature = await signMessageAsync({
-        message: message.prepareMessage(),
-      });
-      const response = await signIn('credentials', {
-        message: JSON.stringify(message),
-        redirect: false,
-        signature,
-      });
-      if (!response?.ok) {
-        throw new Error('Error verifying signature, please retry!');
-      }
-    } catch (error) {
-      window.alert(error);
-    }
-  }, [address, chain?.id, nonce, signMessageAsync]);
+    signMessage({ message: 'Sign in the bat nft app.' });
+  }, [signMessage]);
+
+  const signOut = useCallback(() => {
+    setAuthenticationStatus('unauthenticated');
+    localStorage.removeItem('authenticationStatus');
+  }, []);
 
   const connected = useMemo(() => {
     return isConnected && clickConnect;
   }, [clickConnect, isConnected]);
 
   useEffect(() => {
-    if (!isConnected && session) {
-      signOut({
-        redirect: false,
-      });
+    if (!isConnected && authenticationStatus === 'authenticated') {
+      signOut();
     }
-  }, [isConnected, session]);
+  }, [isConnected, authenticationStatus, signOut]);
 
   /**
    * While it might be tempting to combine the "Connect Wallet" and "Sign In" steps into a single action, this causes issues with deep linking for WalletConnect on iOS. This is because the browser doesn't open the corresponding native app if the navigation wasn't immediately triggered by a user action.
    */
   useEffect(() => {
-    if (connected && !session && nonce) {
+    if (connected && authenticationStatus === 'unauthenticated') {
       handleLogin();
     }
-  }, [connected, nonce, session, handleLogin]);
+  }, [connected, authenticationStatus, handleLogin]);
 
   return (
     <>
-      <CustomConnectBtn authenticationStatus={status} onConnect={() => setClickConnect(true)} />
+      <CustomConnectBtn
+        authenticationStatus={authenticationStatus}
+        onConnect={() => setClickConnect(true)}
+      />
     </>
   );
 }

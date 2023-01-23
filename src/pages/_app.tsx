@@ -1,10 +1,8 @@
 import '../styles/globals.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { RainbowKitProvider, getDefaultWallets, ConnectButton } from '@rainbow-me/rainbowkit';
-import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
 import type { AppProps } from 'next/app';
-import { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
+
 import { useEffect } from 'react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum, goerli } from 'wagmi/chains';
@@ -29,7 +27,7 @@ const wagmiClient = createClient({
   webSocketProvider,
 });
 
-export default function App({ Component, pageProps }: AppProps<{ session: Session }>) {
+export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const use = async () => {
       // @ts-ignore
@@ -39,11 +37,9 @@ export default function App({ Component, pageProps }: AppProps<{ session: Sessio
   }, []);
   return (
     <WagmiConfig client={wagmiClient}>
-      <SessionProvider refetchInterval={0} session={pageProps.session}>
-        <RainbowKitProvider avatar={CustomAvatar} theme={theme} chains={chains}>
-          <Component {...pageProps} />
-        </RainbowKitProvider>
-      </SessionProvider>
+      <RainbowKitProvider avatar={CustomAvatar} theme={theme} chains={chains}>
+        <Component {...pageProps} />
+      </RainbowKitProvider>
     </WagmiConfig>
   );
 }
