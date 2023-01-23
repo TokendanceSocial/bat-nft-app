@@ -30,7 +30,7 @@ function Siwe() {
   }, [getNonce]);
 
   const [text, setText] = useState('');
-  const handleLogin = async () => {
+  const handleLogin = useCallback(async () => {
     try {
       setText('signing-1');
       const message = new SiweMessage({
@@ -58,7 +58,7 @@ function Siwe() {
     } catch (error) {
       window.alert(error);
     }
-  };
+  }, [address, chain?.id, nonce, signMessageAsync]);
 
   const connected = useMemo(() => {
     return isConnected && clickConnect;
@@ -67,9 +67,9 @@ function Siwe() {
   const ref = useRef<any>();
   useEffect(() => {
     if (connected && !session && nonce) {
-      setTimeout(() => {
-        ref.current.click();
-      }, 2000);
+      // setTimeout(() => {
+      //   ref.current.click();
+      // }, 2000);
     }
     if (!isConnected && session) {
       signOut({
