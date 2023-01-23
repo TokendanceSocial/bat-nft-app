@@ -62,7 +62,8 @@ function Siwe() {
 
   useEffect(() => {
     if (connected && !session && nonce) {
-      // ref.current?.click();
+      document.body.focus();
+      handleLogin();
     }
     if (!isConnected && session) {
       signOut({
