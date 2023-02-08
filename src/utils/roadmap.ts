@@ -1,7 +1,10 @@
 export function slider() {
+  // @ts-ignore
   TweenLite.defaultEase = Linear.easeNone;
   var titles = document.querySelectorAll(".sectionTitle");
+  // @ts-ignore
   var controller = new ScrollMagic.Controller();
+  // @ts-ignore
   var tl = new TimelineMax();
 
   // create timeline
@@ -20,6 +23,7 @@ export function slider() {
 
 
 
+  // @ts-ignore
   new ScrollMagic.Scene({
     triggerElement: "#roadmap",
     triggerHook: "onLeave",
