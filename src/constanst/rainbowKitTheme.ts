@@ -1,6 +1,10 @@
-import { midnightTheme } from "@rainbow-me/rainbowkit";
+import { darkTheme } from "@rainbow-me/rainbowkit";
 
-const defaultTheme = midnightTheme();
+const defaultTheme = darkTheme();
 export const theme = {
   ...defaultTheme,
+  colors: {
+    ...defaultTheme.colors,
+    accentColor: '#0e76fd'
+  }
 }

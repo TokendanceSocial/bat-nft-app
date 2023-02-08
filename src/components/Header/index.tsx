@@ -1,7 +1,7 @@
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import Siwe from './Siwe';
 import Logo from '@/assets/images/batLogo.png';
 import { links, pages } from '@/constanst/header';
 import style from '@/styles/Header.module.css';
@@ -27,21 +27,21 @@ export default function Header() {
           </div>
 
           <div className='font-sans flex justify-center items-center space-x-4 ml-4'>
-            <div className='hidden md:flex mr-4'>
+            <div className='hidden md:flex mr-4 justify-center items-center'>
               {links.map((link) => (
                 <a
                   key={link.href}
-                  className='mx-3'
+                  className='mx-3 pt-[5px]'
                   href={link.href}
                   target='_blank'
                   rel='noreferrer'
                 >
-                  <Image alt='Link Logo' src={link.icon} />
+                  <Image alt='Link Logo' width={28} height={28} src={link.icon} />
                 </a>
               ))}
             </div>
 
-            <Siwe />
+            <ConnectButton />
           </div>
         </div>
       </div>

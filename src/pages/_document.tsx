@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html>
       <Head title='BAT NFT'>
+        <link rel='shortcut icon' href='/logo.png' />
         <title>BAT NFT</title>
         <link href='https://fonts.googleapis.com/css2?family=Press%20Start%202P' rel='stylesheet' />
         <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js' />
