@@ -6,7 +6,7 @@ import Story from '../Story';
 import Team from '../Team';
 export default function Content() {
   return (
-    <div id='content' className='pt-[64px]'>
+    <div id='content'>
       <Mint />
       <Story />
       <RoadMap />
