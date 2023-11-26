@@ -8,7 +8,9 @@ import style from '@/styles/Header.module.css';
 
 export default function Header() {
   return (
-    <header className='bg-black text-white w-full flex flex-col items-center fixed top-0 z-30'>
+    <header
+      className={`${style['nav-bar']} text-white w-full flex flex-col items-center fixed top-0 z-30`}
+    >
       <div
         className={`w-[91.66666667%] min-w-[1760px] ${style['voc-contentBox']} rounded-b-3xl max-2xl:rounded-none max-2xl:border-x-0`}
       >

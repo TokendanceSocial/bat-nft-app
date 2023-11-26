@@ -3,3 +3,9 @@
   align-items: center;
   justify-content: center;
 }
+
+.nav-bar {
+  background-color: rgba(242, 245, 249, 0.2);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 20%);
+  backdrop-filter: blur(4px);
+}

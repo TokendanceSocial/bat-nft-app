@@ -1,0 +1,24 @@
+.page1-bg {
+  /* background-image: url("../../assets/background/parallax-bg.gif"); */
+  /* background-image: url('../assets/images/bg/bg3.gif'); */
+  background-image: url('../assets/images/bg/bg1.png');
+  background-size: cover;
+}
+
+.mint-btn {
+  background-color: #d6517d;
+  box-shadow: 0 2px 6px 3px #2d2d2d;
+  transition: all 0.125s ease;
+  font-size: 16px;
+}
+.mint-btn:hover {
+  transform: scale(1.1);
+}
+.mint-btn:active {
+  transform: scale(0.95);
+  background-color: #d16e8f;
+}
+
+.nft-shadow {
+  box-shadow: 0 2px 10px 1px #cbcaca;
+}
